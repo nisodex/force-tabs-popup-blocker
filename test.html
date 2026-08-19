@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba Force Tabs - Suite Completa</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border: #dadce0;
+      --text: #1f1f1f;
+      --text-muted: #5f6368;
+      --primary: #1a73e8;
+      --primary-hover: #1765cc;
+      --primary-container: #e8f0fe;
+      --success: #1e8e3e;
+      --success-container: #e6f4ea;
+      --warning: #e37400;
+      --warning-container: #fef7e0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #202124;
+        --card-bg: #292a2d;
+        --border: #3c4043;
+        --text: #e8eaed;
+        --text-muted: #9aa0a6;
+        --primary: #8ab4f8;
+        --primary-hover: #aecbfa;
+        --primary-container: rgba(138, 180, 248, 0.16);
+        --success: #81c995;
+        --success-container: rgba(129, 201, 149, 0.16);
+        --warning: #fdd663;
+        --warning-container: rgba(253, 214, 99, 0.16);
+      }
+    }
+    body {
+      font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 2.5rem 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    p.lead {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .badge-active { background: var(--success-container); color: var(--success); }
+    .badge-inactive { background: var(--warning-container); color: var(--warning); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 100px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.15s ease;
+      font-family: inherit;
+    }
+    @media (prefers-color-scheme: dark) {
+      button {
+        color: #202124;
+      }
+    }
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+    code {
+      background: var(--primary-container);
+      color: var(--primary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85em;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Laboratorio de Pruebas: Force Tabs</h1>
+    <p class="lead">Comprueba la intercepción de ventanas emergentes y el comportamiento con la Lista Blanca.</p>
+
+    <div class="status-bar">
+      <div>
+        <strong>Estado en esta página:</strong>
+        <span id="pageStateText">Detectando...</span>
+      </div>
+      <span id="pageBadge" class="badge badge-inactive">Cargando</span>
+    </div>
+
+    <div class="card">
+      <h3>1. Popup con dimensiones fijas (width/height)</h3>
+      <p>Sin Force Tabs abre una ventana flotante de 500x500px. Con Force Tabs abre una pestaña normal.</p>
+      <code>window.open('https://example.com', '_blank', 'width=500,height=500')</code><br>
+      <button onclick="window.open('https://example.com', '_blank', 'width=500,height=500')">Abrir Popup (500x500)</button>
+    </div>
+
+    <div class="card">
+      <h3>2. Popup con ventana nombrada y barras desactivadas</h3>
+      <p>Simula popups publicitarios o de descarga con parámetros <code>toolbar=no,menubar=no</code>.</p>
+      <code>window.open('https://example.com', 'popupName', 'toolbar=no,location=no,width=640,height=480')</code><br>
+      <button onclick="window.open('https://example.com', 'popupName', 'toolbar=no,location=no,width=640,height=480')">Abrir Popup Nombrado</button>
+    </div>
+
+    <div class="card">
+      <h3>3. Simulación de Flujo OAuth / Pasarela de Pago</h3>
+      <p>Si la opción de OAuth está activa o el dominio está en lista blanca, las ventanas se abren normalmente.</p>
+      <code>window.open('https://accounts.google.com', 'oauth', 'width=500,height=600')</code><br>
+      <button onclick="window.open('https://accounts.google.com', 'oauth', 'width=500,height=600')">Simular Login Google</button>
+    </div>
+  </div>
+
+  <script>
+    function updatePageStatus() {
+      const activeAttr = document.documentElement.getAttribute('data-force-tabs-active');
+      const textEl = document.getElementById('pageStateText');
+      const badgeEl = document.getElementById('pageBadge');
+
+      if (activeAttr === 'true') {
+        textEl.textContent = 'Forzando Pestañas (Protegido)';
+        badgeEl.textContent = 'ACTIVO';
+        badgeEl.className = 'badge badge-active';
+      } else if (activeAttr === 'false') {
+        textEl.textContent = 'Permitiendo Popups (Excluido o Desactivado)';
+        badgeEl.textContent = 'EXCLUIDO / OFF';
+        badgeEl.className = 'badge badge-inactive';
+      } else {
+        textEl.textContent = 'Extensión no cargada o en espera';
+        badgeEl.textContent = 'SIN INYECCIÓN';
+        badgeEl.className = 'badge badge-inactive';
+      }
+    }
+
+    window.addEventListener('__FORCE_TABS_CONFIG_UPDATE__', updatePageStatus);
+    setInterval(updatePageStatus, 800);
+    updatePageStatus();
+  </script>
+</body>
+</html>
