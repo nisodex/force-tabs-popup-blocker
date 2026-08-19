@@ -17,7 +17,7 @@ Extensión de Google Chrome (**Manifest V3**) que transforma todas las ventanas 
 
 ```text
 ├── manifest.json            # Manifiesto V3 con permisos (storage, tabs, activeTab, contextMenus)
-├── background.js           # Service Worker (inicialización, insignias, menús contextuales, métricas)
+├── background.js           # Service Worker (inicialización, insignias, menús contextuales)
 ├── content_bridge.js       # Script en ISOLATED world (sincroniza storage/eventos con la página)
 ├── content.js              # Script en MAIN world (intercepta window.open nativo)
 ├── popup/
